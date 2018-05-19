@@ -248,7 +248,12 @@ class GiftedChat extends React.Component {
 
   onKeyboardWillShow(e) {
     this.setIsTypingDisabled(true);
-    this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
+    // FIX ios keyboard gap issue, only set for android
+    if (Platform.OS === 'android') {
+      this.setKeyboardHeight(
+        e.endCoordinates ? e.endCoordinates.height : e.end.height
+      );
+    }
     this.setBottomOffset(this.props.bottomOffset);
     const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard();
     if (this.props.isAnimated === true) {
